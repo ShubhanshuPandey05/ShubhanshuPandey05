@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
-import { FiTerminal, FiArrowDown } from 'react-icons/fi';
+import { FiTerminal, FiArrowDown, FiDownload } from 'react-icons/fi';
 
 const useTypingEffect = (text, speed = 50) => {
     const [displayedText, setDisplayedText] = useState('');
@@ -193,7 +193,7 @@ const Hero = ({ about }) => {
                 }}
             />
 
-            <div className="relative z-10 text-center px-6 max-w-4xl">
+            <div className="relative z-10 text-center px-6 max-w-5xl">
                 {/* Terminal badge */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -246,12 +246,23 @@ const Hero = ({ about }) => {
                     transition={{ delay: 1 }}
                     className="flex flex-wrap gap-4 justify-center"
                 >
-                    <MagneticButton
-                        href="#projects"
-                        className="px-8 py-3 bg-gradient-to-r from-primary to-accent text-dark-900 font-semibold rounded-lg hover:shadow-lg hover:shadow-primary/25 transition-all duration-300 inline-block"
-                    >
-                        View My Work
-                    </MagneticButton>
+                    {about?.resumeUrl ? (
+                        <MagneticButton
+                            href={about.resumeUrl}
+                            className="px-8 py-3 bg-gradient-to-r from-primary to-accent text-dark-900 font-semibold rounded-lg hover:shadow-lg hover:shadow-primary/25 transition-all duration-300 inline-flex items-center gap-2"
+                            download
+                            target="_blank"
+                        >
+                            <FiDownload /> Download Resume
+                        </MagneticButton>
+                    ) : (
+                        <MagneticButton
+                            href="#projects"
+                            className="px-8 py-3 bg-gradient-to-r from-primary to-accent text-dark-900 font-semibold rounded-lg hover:shadow-lg hover:shadow-primary/25 transition-all duration-300 inline-block"
+                        >
+                            View My Work
+                        </MagneticButton>
+                    )}
                     <MagneticButton
                         href="#contact"
                         className="px-8 py-3 glass rounded-lg text-text-primary font-medium hover:bg-white/10 transition-all duration-300 inline-block"
