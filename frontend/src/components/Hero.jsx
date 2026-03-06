@@ -251,14 +251,14 @@ const Hero = ({ about }) => {
                     className="flex flex-wrap gap-4 justify-center"
                 >
                     {about?.resumeUrl ? (
-                        <MagneticButton
+                        <a
                             href={about.resumeUrl}
                             className="px-8 py-3 bg-gradient-to-r from-primary to-accent text-dark-900 font-semibold rounded-lg hover:shadow-lg hover:shadow-primary/25 transition-all duration-300 inline-flex items-center gap-2"
                             download
                             target="_blank"
                         >
                             <FiDownload /> Download Resume
-                        </MagneticButton>
+                        </a>
                     ) : (
                         <MagneticButton
                             href="projects"
