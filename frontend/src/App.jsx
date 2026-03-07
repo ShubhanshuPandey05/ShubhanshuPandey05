@@ -2,6 +2,7 @@ import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
 import Home from './pages/Home';
+import WorkPage from './pages/WorkPage';
 import BlogPage from './pages/BlogPage';
 import BlogPost from './pages/BlogPost';
 import Login from './pages/admin/Login';
@@ -21,6 +22,7 @@ function App() {
           <Routes>
             {/* Public Portfolio */}
             <Route path="/" element={<Home />} />
+            <Route path="/work" element={<WorkPage />} />
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
 

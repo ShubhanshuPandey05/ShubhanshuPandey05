@@ -4,11 +4,10 @@ import { FiMenu, FiX, FiSun, FiMoon } from 'react-icons/fi';
 import { useTheme } from '../context/ThemeContext';
 
 const navLinks = [
-    { label: 'About', href: 'about' },
-    { label: 'Work', href: 'projects' },
-    { label: 'Skills', href: 'skills' },
-    { label: 'Blog', href: 'blog' },
-    { label: 'Contact', href: 'contact' },
+    { label: 'About', href: 'about', type: 'scroll' },
+    { label: 'Work', href: '/#/work', type: 'route' },
+    { label: 'Blog', href: '/#/blog', type: 'route' },
+    { label: 'Contact', href: 'contact', type: 'scroll' },
 ];
 
 const Navbar = () => {
@@ -22,35 +21,47 @@ const Navbar = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    const handleNavClick = (link) => {
+        if (link.type === 'route') {
+            window.location.href = link.href;
+        } else {
+            const el = document.getElementById(link.href);
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                window.location.href = `/#/`;
+                setTimeout(() => {
+                    document.getElementById(link.href)?.scrollIntoView({ behavior: 'smooth' });
+                }, 300);
+            }
+        }
+    };
+
     return (
         <motion.nav
             initial={{ y: -100 }}
             animate={{ y: 0 }}
             transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
             className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled
-                    ? 'bg-bg-primary/90 backdrop-blur-md border-b border-border'
-                    : 'bg-transparent'
+                ? 'bg-bg-primary/90 backdrop-blur-md border-b border-border'
+                : 'bg-transparent'
                 }`}
         >
             <div className="max-w-7xl mx-auto px-6 md:px-12 py-5 flex items-center justify-between">
-                {/* Logo — Name in serif */}
-                <button
-                    onClick={() => {
-                        document.getElementById('home')?.scrollIntoView({ behavior: 'smooth' });
-                    }}
+                {/* Logo */}
+                <a
+                    href="/#/"
                     className="font-serif text-xl md:text-2xl font-bold tracking-tight text-text-primary hover:text-accent transition-colors duration-300"
                 >
                     SP<span className="text-accent">.</span>
-                </button>
+                </a>
 
                 {/* Desktop Links */}
                 <div className="hidden md:flex items-center gap-10">
                     {navLinks.map((link) => (
                         <button
-                            key={link.href}
-                            onClick={() => {
-                                document.getElementById(link.href)?.scrollIntoView({ behavior: 'smooth' });
-                            }}
+                            key={link.label}
+                            onClick={() => handleNavClick(link)}
                             className="text-caption text-text-muted hover:text-text-primary transition-colors duration-300"
                         >
                             {link.label}
@@ -97,9 +108,9 @@ const Navbar = () => {
                         <div className="px-6 py-6 flex flex-col gap-5">
                             {navLinks.map((link) => (
                                 <button
-                                    key={link.href}
+                                    key={link.label}
                                     onClick={() => {
-                                        document.getElementById(link.href)?.scrollIntoView({ behavior: 'smooth' });
+                                        handleNavClick(link);
                                         setMobileOpen(false);
                                     }}
                                     className="text-caption text-text-muted hover:text-text-primary transition-colors text-left"
